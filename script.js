@@ -29,7 +29,7 @@ const Observer = new IntersectionObserver((entries) => {
     });
 }, options);
 
-const elements = document.querySelectorAll(".animate-on-scroll, .slide-left, .slide-right, .fade-in, .stagger-item");
+const elements = document.querySelectorAll(".animate-on-scroll, .slide-left, .slide-right, .fade-in, .stagger-item, .scale-up");
 
 elements.forEach((el) => {
     Observer.observe(el);
@@ -78,16 +78,15 @@ for (let i = 0; i < 50; i++) {
     particles.appendChild(particle);
 }
 
-function animateCounter(element) {
-    const original = element.textContent;
-    const target = parseFloat(original) || 0;
+function animateCounter(element, target, texttt) {
     let current = 0;
-    const step = target / 60;
+    const step = target / 60; 
 
-    const timer = sertInterval(() => {
+    const timer = setInterval(() => {
         current += step;
+
         if (current >= target) {
-            element.textContent = original;
+            element.textContent = texttt;
             clearInterval(timer);
 
         }else {
@@ -97,11 +96,13 @@ function animateCounter(element) {
     }, 30)
 }
 const stats = document.querySelector(".stats");
-const statsObserver = new IntersectionObserver ((entries) => {
-    if (entries[0].Intersecting) {
-        document.query.Selectorall(".stat-number").forEach((num) => {
-            animateCounter(num);
-        });
+const statsObserver = new IntersectionObserver (function(entries) {
+    if (entries[0].isIntersecting) {
+        const numbers = document.querySelectorAll(".stat-number");
+        animateCounter(numbers[0], 1, "1М+");
+        animateCounter(numbers[1], 99, "99.9");             
+        animateCounter(numbers[2], 24, "24/7"); 
+        animateCounter(numbers[3], 1, "1Gbps"); 
         statsObserver.unobserve(stats);
     }
 })
